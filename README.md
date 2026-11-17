@@ -1,17 +1,30 @@
-# One World Beta
+# One World Project
 
-Public testing beta of a modified One World app. Original game: Smiley. Reused and modified with permission. This repository does not change Smiley's original project. Stable release is separate and is not published here.
+Development source for Karthi's modified One World Android beta. Current source baseline: **1.3.25 (versionCode 47)**, character lighting/sole support, original anime entry art, transparent controls and mandatory online update gate.
 
-Android package: `com.oneword.forest.beta`.
+This is a testing beta, not a stable release. Original game by Smiley, used and modified with permission. Preserve the asset and third-party notices in `web/assets/licenses/` and the music provenance in `web/assets/music/PROVENANCE.txt`. This repository does not grant a blanket license over all game code or the AI-generated track.
 
-Install updates over the existing beta. Do not uninstall or clear app data if you want to keep the saved world.
+## Source layout
 
-Beta 1.3.22 adds pregame-only looping menu music, High-only sun shadows with repaired shadow dimensions, original tree geometry with painted Low foliage and lower particle budgets, a separate Crafting button, and static glass controls. Low/Medium sun shadows are off.
+- `web/`: complete bundled HTML, game JavaScript, licensed models/textures/UI/audio and notices.
+- `android/src/`: Android host, verified updater, asset range handling and APK provider.
+- `android/res/`, `android/AndroidManifest.xml`: original app icons/resources and package configuration.
+- `scripts/build-unsigned.py`: Android API 36 / Java 17 build without signing credentials.
 
-Compilation, signature checks, browser and packaged-asset tests do not prove phone graphics, music playback, performance, installation, or in-app download/install behavior. The original Low tree geometry renders more triangles than the previous blob substitute, so no lag-free claim is made. Natural spaces between branches remain. This is a testing prerelease, not stable.
+The existing One-World-Beta repository remains the app's update origin. Do not rename it, move the updater endpoint, change the package `com.oneword.forest.beta`, change the saved-world keys or replace published release files as part of ordinary development.
 
-The binary parts are transport inputs, not separate apps. Download only the complete APK from a published prerelease. Assembly verifies the exact expected SHA-256 and byte count before publishing.
+## Local preview
 
-Original and licensed assets are included. Their notices remain bundled with the app, including Three.js MIT, VRoid Project and Quaternius CC0 models, and Poly Haven CC0 textures. No ownership of third-party assets is claimed.
+Run `python3 -m http.server 8080 --directory web` and open localhost port 8080 in a browser. The browser preview has no Android update/install bridge. Phone behavior must be tested separately.
 
-The automatically generated GitHub Source code ZIP/TAR files contain repository assembly inputs, not the full game development source. Bundled app notices identify third-party assets. A full development-source archive is not published here yet.
+## Android build
+
+Install Java 17 and Android SDK platform 36 plus build-tools 36.0.0. Set `ANDROID_SDK_ROOT` and run `python3 scripts/build-unsigned.py`. The result is `build/one-world-unsigned.apk`. Signing is a separate owner-controlled step. An unsigned or differently signed test APK cannot upgrade the existing beta.
+
+## Current baseline and pending requests
+
+1.3.24 changes only Settings layout and Android version metadata relative to 1.3.23. Native updater code and bundled game assets are unchanged. The new referenced island, saved-world strategy and possible removal of SAVE & CLOSE are not implemented here. Published package checks do not prove every phone graphics mode, FPS, audio lifecycle or update/download/install behavior.
+
+## Testing releases
+
+This public development repository is https://github.com/PPYGaming/One-World-Project. The existing public update origin remains https://github.com/PPYGaming/One-World-Beta. Current numbered release: 1.3.24 (46), mirrored without rebuilding or changing its signature. Preview screenshots are in `docs/screenshots/1.3.24/`. Future collaborator access and enforced release automation are not configured yet.
