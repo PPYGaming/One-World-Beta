@@ -6,7 +6,9 @@ Android package: `com.oneword.forest.beta`.
 
 Install updates over the existing beta. Do not uninstall or clear app data if you want to keep the saved world.
 
-[Beta 1.3.21](https://github.com/PPYGaming/One-World-Beta/releases/tag/v1.3.21) is the diagnostic updater bootstrap, without new background music. The earlier 1.3.20 installation failure is unexplained; 1.3.21 is one controlled install-over-existing test, not a verified installation fix. Native update/download/install behavior still needs phone testing. Compilation and browser tests do not prove Android installation works.
+Beta 1.3.22 adds pregame-only looping menu music, High-only sun shadows with repaired shadow dimensions, original tree geometry with painted Low foliage and lower particle budgets, a separate Crafting button, and static glass controls. Low/Medium sun shadows are off.
+
+Compilation, signature checks, browser and packaged-asset tests do not prove phone graphics, music playback, performance, installation, or in-app download/install behavior. The original Low tree geometry renders more triangles than the previous blob substitute, so no lag-free claim is made. Natural spaces between branches remain. This is a testing prerelease, not stable.
 
 The binary parts are transport inputs, not separate apps. Download only the complete APK from a published prerelease. Assembly verifies the exact expected SHA-256 and byte count before publishing.
 
