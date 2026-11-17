@@ -1,0 +1,25 @@
+name: Publish verified beta 1.3.24
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Get exact public repository revision
+        run: |
+          git clone --depth 1 "https://github.com/$GITHUB_REPOSITORY.git" stage
+          cd stage
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify and assemble signed beta
+        run: |
+          cd stage
+          python3 *assemble-followon1324.py
+      - name: Publish testing prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd stage
+          gh release create v1.3.24 release/one-world-beta-1.3.24.apk release/beta-update.json --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "One World Beta 1.3.24 - fullscreen settings" --notes "Testing beta, not stable. Fullscreen game-style settings: left category navigation, right scrolling options, top close and fixed save actions. Existing graphics, sensitivity, control editor, survivor, help and beta tools retained; no new reference-game features or default quality change. Keeps the first-loading updater from 1.3.23 and previous graphics, crafting and pregame music. Browser/package checks do NOT prove phone layout, touch scrolling, graphics, audio, performance or update/download/install. Install over the existing beta; do not uninstall or clear data. Same beta package/signing certificate, Android 10-16 static compatibility only. Original game by Smiley, modified with permission; retain bundled notices. Stable launch is not part of this prerelease."
