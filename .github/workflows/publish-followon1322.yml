@@ -1,0 +1,25 @@
+name: Publish verified beta 1.3.22
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Get exact public repository revision
+        run: |
+          git clone --depth 1 "https://github.com/$GITHUB_REPOSITORY.git" stage
+          cd stage
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Verify and assemble signed beta
+        run: |
+          cd stage
+          python3 *assemble-followon1322.py
+      - name: Publish testing prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd stage
+          gh release create v1.3.22 release/one-world-beta-1.3.22.apk release/beta-update.json --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --title "One World Beta 1.3.22 - graphics, crafting and menu music" --notes "Testing beta, not stable. Pregame-only looping menu music from the user-supplied AI-generated track. High-only sun shadows with repaired shadow dimensions; Low/Medium shadows off. Original tree geometry with painted Low foliage and lower particle budgets. Separate Crafting button and static glass controls. Browser/package checks do NOT prove phone graphics, playback, performance or update/download/install behavior. Original Low tree geometry costs more triangles than the prior blob variant; no lag-free claim. Install over the existing beta; do not uninstall or clear data. Same beta package/signing certificate, Android 10-16 static compatibility only. Original game by Smiley, modified with permission; retain bundled notices. Stable launch is not part of this prerelease."
